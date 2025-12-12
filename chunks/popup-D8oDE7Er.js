@@ -1,2 +1,19 @@
-import{l as t,j as o}from"./Providers-CTFhomsf.js";import{i as s,b as a,r,S as n}from"./index-vkF7KXw7.js";s({dsn:"https://fbfbc25611102a7ea6070544162e7f8b@o4508423819886592.ingest.us.sentry.io/4508429447004160",integrations:[a(),r()],tracesSampleRate:1,tracePropagationTargets:["localhost",/^https:\/\/www\.dobrowser\.io/],replaysSessionSampleRate:.1,replaysOnErrorSampleRate:1});function i(){chrome.storage.session.setAccessLevel({accessLevel:"TRUSTED_AND_UNTRUSTED_CONTEXTS"});const e=document.getElementById("app");e?t.createRoot(e).render(o.jsx(n,{})):console.error("Root element not found")}i();
+import {l as t, j as o} from "./Providers-CTFhomsf.js";
+import {i as s, b as a, r, S as n} from "./index-vkF7KXw7.js";
+s({
+    dsn: "https://fbfbc25611102a7ea6070544162e7f8b@o4508423819886592.ingest.us.sentry.io/4508429447004160",
+    integrations: [a(), r()],
+    tracesSampleRate: 1,
+    tracePropagationTargets: ["localhost", /^https:\/\/www\.dobrowser\.io/],
+    replaysSessionSampleRate: .1,
+    replaysOnErrorSampleRate: 1
+});
+function i() {
+    chrome.storage.session.setAccessLevel({
+        accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS"
+    });
+    const e = document.getElementById("app");
+    e ? t.createRoot(e).render(o.jsx(n, {})) : console.error("Root element not found")
+}
+i();
 //# sourceMappingURL=popup-D8oDE7Er.js.map

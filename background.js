@@ -1,2 +1,135 @@
-var background=function(){"use strict";var p,h;function y(o){return o==null||typeof o=="function"?{main:o}:o}const L=y(()=>{chrome.action.setPopup({popup:""}),chrome.runtime.onInstalled.addListener(e=>{e.reason==="install"&&chrome.tabs.create({url:"https://www.dobrowser.io/getting-started"})});let o=!1,n=null,b=!1,d=[];async function l(e){b?(chrome.action.setPopup({popup:"popup.html"}),await chrome.action.openPopup()):await chrome.sidePanel.open({tabId:e})}function g(e){n?n.postMessage(e):d.push(e)}chrome.runtime.onConnect.addListener(e=>{if(n=e,e.name==="sidebar"){for(const t of d)g(t);d=[],o=!0,e.onDisconnect.addListener(async()=>{n=null,o=!1;const t=await chrome.tabs.query({});for(const s of t)try{try{await chrome.debugger.detach({tabId:s.id})}catch{}await chrome.tabs.sendMessage(s.id,{action:"simulateClick",box:null})}catch(r){console.error("Error sending simulateClick:",r)}})}}),chrome.runtime.onMessage.addListener((e,t,s)=>{var r,i;return e.type==="getCurrentTabId"?s({tabId:(r=t.tab)==null?void 0:r.id}):e.type==="open_side_panel"?l((i=t.tab)==null?void 0:i.id):e.type==="browserIsArc"&&(b=!0,chrome.action.setPopup({popup:"popup/index.html"})),!0}),chrome.commands.onCommand.addListener(function(e,t){e==="toggle-sidebar"&&(o?n==null||n.postMessage({action:"close"}):l(t.id))}),chrome.action.onClicked.addListener(async e=>{l(e.id)});let m;chrome.omnibox.onInputStarted.addListener(async()=>{var t,s,r,i,a,f,w;const e=await chrome.tabs.query({active:!0,currentWindow:!0});m=(t=e[0])==null?void 0:t.id,((r=(s=e[0])==null?void 0:s.url)!=null&&r.startsWith("chrome")||(a=(i=e[0])==null?void 0:i.url)!=null&&a.includes("chromewebstore.google.com")||(w=(f=e[0])==null?void 0:f.url)!=null&&w.startsWith("edge://"))&&await chrome.tabs.update(m,{url:"about:blank"})}),chrome.omnibox.onInputChanged.addListener(async(e,t)=>{const i=((await chrome.storage.local.get("messageHistory")).messageHistory||[]).filter(a=>a.toLowerCase().includes(e.toLowerCase())).map(a=>({content:a,description:a}));t(i)}),chrome.omnibox.onInputEntered.addListener(e=>{chrome.sidePanel.open({tabId:m}),g({action:"request",msg:e})})});function C(){}(h=(p=globalThis.browser)==null?void 0:p.runtime)!=null&&h.id?globalThis.browser:globalThis.chrome;function c(o,...n){}const I={debug:(...o)=>c(console.debug,...o),log:(...o)=>c(console.log,...o),warn:(...o)=>c(console.warn,...o),error:(...o)=>c(console.error,...o)};let u;try{u=L.main(),u instanceof Promise&&console.warn("The background's main() function return a promise, but it must be synchronous")}catch(o){throw I.error("The background crashed on startup!"),o}return u}();
-//# sourceMappingURL=background.js.map
+var background = function() {
+    "use strict";
+    var p, h;
+    function y(o) {
+        return o == null || typeof o == "function" ? {
+            main: o
+        } : o
+    }
+    const L = y( () => {
+        chrome.action.setPopup({
+            popup: ""
+        }),
+        chrome.runtime.onInstalled.addListener(e => {
+            e.reason === "install" && chrome.tabs.create({
+                url: "https://www.dobrowser.io/getting-started"
+            })
+        }
+        );
+        let o = !1
+          , n = null
+          , b = !1
+          , d = [];
+        async function l(e) {
+            b ? (chrome.action.setPopup({
+                popup: "popup.html"
+            }),
+            await chrome.action.openPopup()) : await chrome.sidePanel.open({
+                tabId: e
+            })
+        }
+        function g(e) {
+            n ? n.postMessage(e) : d.push(e)
+        }
+        chrome.runtime.onConnect.addListener(e => {
+            if (n = e,
+            e.name === "sidebar") {
+                for (const t of d)
+                    g(t);
+                d = [],
+                o = !0,
+                e.onDisconnect.addListener(async () => {
+                    n = null,
+                    o = !1;
+                    const t = await chrome.tabs.query({});
+                    for (const s of t)
+                        try {
+                            try {
+                                await chrome.debugger.detach({
+                                    tabId: s.id
+                                })
+                            } catch {}
+                            await chrome.tabs.sendMessage(s.id, {
+                                action: "simulateClick",
+                                box: null
+                            })
+                        } catch (r) {
+                            console.error("Error sending simulateClick:", r)
+                        }
+                }
+                )
+            }
+        }
+        ),
+        chrome.runtime.onMessage.addListener( (e, t, s) => {
+            var r, i;
+            return e.type === "getCurrentTabId" ? s({
+                tabId: (r = t.tab) == null ? void 0 : r.id
+            }) : e.type === "open_side_panel" ? l((i = t.tab) == null ? void 0 : i.id) : e.type === "browserIsArc" && (b = !0,
+            chrome.action.setPopup({
+                popup: "popup/index.html"
+            })),
+            !0
+        }
+        ),
+        chrome.commands.onCommand.addListener(function(e, t) {
+            e === "toggle-sidebar" && (o ? n == null || n.postMessage({
+                action: "close"
+            }) : l(t.id))
+        }),
+        chrome.action.onClicked.addListener(async e => {
+            l(e.id)
+        }
+        );
+        let m;
+        chrome.omnibox.onInputStarted.addListener(async () => {
+            var t, s, r, i, a, f, w;
+            const e = await chrome.tabs.query({
+                active: !0,
+                currentWindow: !0
+            });
+            m = (t = e[0]) == null ? void 0 : t.id,
+            ((r = (s = e[0]) == null ? void 0 : s.url) != null && r.startsWith("chrome") || (a = (i = e[0]) == null ? void 0 : i.url) != null && a.includes("chromewebstore.google.com") || (w = (f = e[0]) == null ? void 0 : f.url) != null && w.startsWith("edge://")) && await chrome.tabs.update(m, {
+                url: "about:blank"
+            })
+        }
+        ),
+        chrome.omnibox.onInputChanged.addListener(async (e, t) => {
+            const i = ((await chrome.storage.local.get("messageHistory")).messageHistory || []).filter(a => a.toLowerCase().includes(e.toLowerCase())).map(a => ({
+                content: a,
+                description: a
+            }));
+            t(i)
+        }
+        ),
+        chrome.omnibox.onInputEntered.addListener(e => {
+            chrome.sidePanel.open({
+                tabId: m
+            }),
+            g({
+                action: "request",
+                msg: e
+            })
+        }
+        )
+    }
+    );
+    function C() {}
+    (h = (p = globalThis.browser) == null ? void 0 : p.runtime) != null && h.id ? globalThis.browser : globalThis.chrome;
+    function c(o, ...n) {}
+    const I = {
+        debug: (...o) => c(console.debug, ...o),
+        log: (...o) => c(console.log, ...o),
+        warn: (...o) => c(console.warn, ...o),
+        error: (...o) => c(console.error, ...o)
+    };
+    let u;
+    try {
+        u = L.main(),
+        u instanceof Promise && console.warn("The background's main() function return a promise, but it must be synchronous")
+    } catch (o) {
+        throw I.error("The background crashed on startup!"),
+        o
+    }
+    return u
+}();
